@@ -25,23 +25,32 @@ def main():
     # Connect to robot
     port = "COM2"
     slaveNumber = 1
-    settings = {"baudrate":9600, "stopbits":1, "parity":"E", "bytesize":8}
+    BAUDRATE = 9600
+    STOPBITS = 1
+    PARITY = "E"
+    BYTESIZE = 8
+    
     #Register parameters
     #START_REGISTER = 1100
     #NUMBER_OF_REGISTERS = 10
     registers = {'engine_right':1100, 'engine_left':1101, 'light_level':1102, \
     'camera_id':1103, 'noop':1104, 'motor_direction_left':1105, \
     'motor_direction_right':1106}
-    
-    motka = Instrument(port, slaveNumber, **settings)       
-    # test robot
-    blink(motka)     
 
     # open log file
     name = "logs/log_"+time.strftime("%d_%b_%Y_%H_%M_%S") + ".txt"
     logFile = open(name, 'a')
+
+    motka = Instrument(port, slaveNumber)
+    motka.serial.baudrate = BAUDRATE
+    motka.serial.stopbits = STOPBITS
+    motka.serial.parity = PARITY
+    motka.serial.bytesize = BYTESIZE       
+    # test robot
+    blink(motka)         
     
     #Read data from device and write it to log file    
+    print "Logger started. If you want to stop press Cntrl+C "    
     try:    
         while 1:
             data = []        
