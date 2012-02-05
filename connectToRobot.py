@@ -22,7 +22,7 @@ def writeData(f, data):
     f.write('\n');
     
 def main(): 
-    # Connect to robot
+    # Serial port parameters    
     port = "COM2"
     slaveNumber = 1
     BAUDRATE = 9600
@@ -30,7 +30,8 @@ def main():
     PARITY = "E"
     BYTESIZE = 8
     
-    #Register parameters
+    # Register parameters. 
+    # registers - list of registers which will be logged. 
     #START_REGISTER = 1100
     #NUMBER_OF_REGISTERS = 10
     registers = {'engine_right':1100, 'engine_left':1101, 'light_level':1102, \
@@ -40,7 +41,8 @@ def main():
     # open log file
     name = "logs/log_"+time.strftime("%d_%b_%Y_%H_%M_%S") + ".txt"
     logFile = open(name, 'a')
-
+    
+    # Connect to robot
     motka = Instrument(port, slaveNumber)
     motka.serial.baudrate = BAUDRATE
     motka.serial.stopbits = STOPBITS
