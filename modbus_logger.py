@@ -6,16 +6,6 @@ A simple modbus logger based on minimalmodbus
 from minimalmodbus import Instrument 
 import time
 
-def blink(instrument):
-    secs=1    
-    try:    
-        instrument.write_register(1102, 65000)
-        time.sleep(secs)
-        instrument.write_register(1102, 0)
-    except:
-        instrument.close()
-        raise
-    
 def writeData(f, data):
     f.write(str(data[0]))    
     for variable in data[1:]:
@@ -48,9 +38,7 @@ def main():
     motka.serial.baudrate = BAUDRATE
     motka.serial.stopbits = STOPBITS
     motka.serial.parity = PARITY
-    motka.serial.bytesize = BYTESIZE       
-    # test robot
-    blink(motka)         
+    motka.serial.bytesize = BYTESIZE          
     
     #Read data from device and write it to log file    
     print "Logger started. If you want to stop press Cntrl+C "    
