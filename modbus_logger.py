@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author: Kartaviy Pavel
-
+A simple modbus logger based on minimalmodbus
 """
 from minimalmodbus import Instrument 
 import time
@@ -14,6 +14,7 @@ def blink(instrument):
         instrument.write_register(1102, 0)
     except:
         instrument.close()
+        raise
     
 def writeData(f, data):
     f.write(str(data[0]))    
@@ -59,8 +60,10 @@ def main():
             for value in registers.values():
                 data.append( motka.read_register(value) )    
             writeData(logFile, data)
-    except:
-        print "Logger is stopped"
+    except KeyboardInterrupt:
+        print "Logger was stopped by keyboard interrupt"
+    except:         
+        raise
     
     logFile.close()
     motka.close()
