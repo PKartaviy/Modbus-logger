@@ -50,7 +50,9 @@ def main():
             writeData(logFile, data)
     except KeyboardInterrupt:
         print "Logger was stopped by keyboard interrupt"
-    except:         
+    except:
+        logFile.close()
+        motka.close()         
         raise
     
     logFile.close()
